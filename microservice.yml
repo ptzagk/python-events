@@ -9,6 +9,10 @@ info:
 lifecycle:
   startup:
     command: ["python", "/app/app.py"]
+health:
+  http:
+    path: /health
+    port: 8080
 actions:
   listen:
     help: Subscribe to events
