@@ -31,7 +31,7 @@ class Manager:
 
     def subscribe(self, id_, endpoint, event_name, data):
         data = data or {}
-        logger.info(f'[subscribe] id: "{id_}", endpoint:"{endpoint}"'
+        logger.info(f'[subscribe] id: "{id_}", endpoint:"{endpoint}", '
                     f'name: "{event_name}", data: %s', data)
         if event_name not in self._events:
             self._events[event_name] = {}
