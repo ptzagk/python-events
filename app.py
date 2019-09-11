@@ -21,15 +21,6 @@ logger.setLevel(logging.INFO)
 
 Node = namedtuple('Node', ['endpoint', 'data'])
 
-# Workaround for https://github.com/microservices/omg-cli/issues/181
-c = subprocess.run(['ip', '-4', 'route', 'list', 'match', '0/0'],
-                   capture_output=True, encoding='utf-8')
-host_ip = c.stdout.split(' ')[2]
-
-
-def normalize_url(url):
-    return url.replace("host.docker.internal", host_ip)
-
 
 # A simple manager which tracks all event subscriptions
 class Manager:
@@ -40,7 +31,7 @@ class Manager:
 
     def subscribe(self, id_, endpoint, event_name, data):
         data = data or {}
-        logger.info(f'[subscribe] id: "{id_}", endpoint:"{endpoint}"'
+        logger.info(f'[subscribe] id: "{id_}", endpoint:"{endpoint}", '
                     f'name: "{event_name}", data: %s', data)
         if event_name not in self._events:
             self._events[event_name] = {}
@@ -75,7 +66,7 @@ class Manager:
 
     def _send_event(self, node, event_name, data):
         local_time = datetime.now(timezone.utc).astimezone()
-        requests.post(normalize_url(node.endpoint), json={
+        requests.post(node.endpoint, json={
             'eventType': event_name,
             'type': 'com.microservices.python.template',
             'specversion': '0.2',
@@ -118,6 +109,11 @@ def publish():
         event_name=request.json['event'],
         data=data,
     )})
+
+
+@app.route('/health', methods=['GET'])
+def health():
+    return 'OK'
 
 
 # Return errors as JSON objects
