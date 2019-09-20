@@ -16,6 +16,8 @@ health:
 actions:
   listen:
     help: Subscribe to events
+    output:
+      type: map
     events:
       heartbeat:
         help: Subscribe to heartbeat events from different users
@@ -36,7 +38,7 @@ actions:
             user:
               type: string
             time:
-              type: data
+              type: string
   publish:
     help: Publish an event to your service
     arguments:
@@ -52,6 +54,12 @@ actions:
         type: map
         in: requestBody
         required: true
+    output:
+      type: object
+      contentType: application/json
+      properties:
+        success:
+          type: boolean
     http:
       port: 8080
       method: post
