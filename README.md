@@ -4,7 +4,7 @@
 [![Build status](https://img.shields.io/travis/com/microservices/python-events/master.svg?style=for-the-badge)](https://travis-ci.com/microservices/python-events)
 [![Docker Build Status](https://img.shields.io/docker/build/microservices/awesome-noun.svg?style=for-the-badge)](https://hub.docker.com/r/OWNER/REPO/)
 
-An OMG template for Python with subscription endpoints.
+An OMS template for Python with subscription endpoints.
 
 Usage
 -----
@@ -43,10 +43,10 @@ Test
 ### Subscribe to all user events
 
 ```sh
-> omg subscribe listen heartbeat
+> oms subscribe listen heartbeat
 ℹ Building Docker image
 …
-✔ Built Docker image with name: omg/microservices/python-events
+✔ Built Docker image with name: oms/microservices/python-events
 ✔ Started Docker container: 7be7d3cc4da6
 ✔ Health check passed
 ✔ Ran action: `listen` with output:
@@ -84,10 +84,10 @@ Test
 ### Subscribe to all individual user events
 
 ```sh
-> omg subscribe listen heartbeat -a user='max'
+> oms subscribe listen heartbeat -a user='max'
 ℹ Building Docker image
 …
-✔ Built Docker image with name: omg/microservices/python-events
+✔ Built Docker image with name: oms/microservices/python-events
 ✔ Started Docker container: 5d2592cbd82b
 ✔ Health check passed
 ✔ Ran action: `listen` with output:
