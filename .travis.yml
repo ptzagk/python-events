@@ -6,8 +6,7 @@ services:
   - docker
 
 before_install:
-  - npm i @microservices/cli
-  - npm ci
+  - npm i @microservices/oms
 
 script:
   - npx oms build
