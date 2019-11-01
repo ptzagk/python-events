@@ -15,6 +15,7 @@ readdirSync(payloadDir).forEach(payload => {
   const oms = spawnSync('node', [runner, file], {
     stdio: [process.stdin, process.stdout, process.stderr]
   })
+
   assert(oms.status === 0)
-  assert(oms.error === undefined)
+  // assert(oms.stderr === null)
 })
