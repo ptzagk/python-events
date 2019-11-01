@@ -6,7 +6,7 @@ The events to be subscribed and arguments are parsed from the filename.
 */
 
 const assert = require('assert').strict
-const { spawn } = require('child_process')
+const { spawn } = require('cross-spawn')
 const { basename } = require('path')
 const { readFileSync } = require('fs')
 
