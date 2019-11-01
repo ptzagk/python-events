@@ -8,7 +8,7 @@ info:
     url: https://opensource.org/licenses/Apache-2.0
 lifecycle:
   startup:
-    command: ["python", "/app/app.py"]
+    command: ['python', '/app/app.py']
 health:
   http:
     path: /health
@@ -16,8 +16,6 @@ health:
 actions:
   listen:
     help: Subscribe to events
-    output:
-      type: map
     events:
       heartbeat:
         help: Subscribe to heartbeat events from different users
