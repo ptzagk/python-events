@@ -4,7 +4,7 @@
 const assert = require('assert').strict
 const { readdirSync } = require('fs')
 const { join } = require('path')
-const spawnSync = require('cross-spawn')
+const spawnSync = require('cross-spawn').sync
 
 const payloadDir = join(__dirname, 'payloads')
 const runner = join(__dirname, 'runner.js')
