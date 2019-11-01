@@ -48,4 +48,4 @@ test(function (oms) {
 
 setTimeout(function () {
   assert(0, 'No event received. Timeout.')
-}, 30000)
+}, 60000)
