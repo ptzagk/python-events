@@ -1,3 +1,4 @@
+# Documentation: https://microservice.guide
 oms: 1
 info:
   version: 1.0.0
@@ -8,7 +9,7 @@ info:
     url: https://opensource.org/licenses/Apache-2.0
 lifecycle:
   startup:
-    command: ['python', '/app/app.py']
+    command: ['node', '/app/src/index.js']
 health:
   http:
     path: /health
@@ -52,14 +53,10 @@ actions:
         type: map
         in: requestBody
         required: true
-    output:
-      type: object
-      contentType: application/json
-      properties:
-        success:
-          type: boolean
     http:
       port: 8080
       method: post
       contentType: application/json
       path: /publish
+    output:
+      type: none

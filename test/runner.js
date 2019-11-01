@@ -19,16 +19,20 @@ const actions = basename(payloadFile)
   .split('.')[0]
   .split('_')
 
-function testWithOMS (cb) {
+function test (cb) {
   const args = ['oms', 'subscribe', '--silent', 'listen', ...actions]
   console.log(`Spawn: ${args.join(' ')}`)
   const oms = spawn('npx', args)
-  oms.stdout.pipe(process.stdout)
-  oms.stderr.pipe(process.stderr)
+  oms.stdout.on('data', data => {
+    process.stdout.write(data)
+  })
+  oms.stderr.on('data', data => {
+    process.stdout.write(data)
+  })
   cb(oms)
 }
 
-testWithOMS(function (oms) {
+test(function (oms) {
   oms.stdout.on('data', data => {
     const payload = JSON.parse(data)
     delete payload.time
