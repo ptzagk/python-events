@@ -8,7 +8,7 @@ info:
     url: https://opensource.org/licenses/Apache-2.0
 lifecycle:
   startup:
-    command: ["python", "/app/app.py"]
+    command: ['python', '/app/app.py']
 health:
   http:
     path: /health
@@ -36,7 +36,7 @@ actions:
             user:
               type: string
             time:
-              type: data
+              type: string
   publish:
     help: Publish an event to your service
     arguments:
@@ -52,6 +52,12 @@ actions:
         type: map
         in: requestBody
         required: true
+    output:
+      type: object
+      contentType: application/json
+      properties:
+        success:
+          type: boolean
     http:
       port: 8080
       method: post
