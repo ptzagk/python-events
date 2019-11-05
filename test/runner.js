@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /*
-Takes a single payload with the expected JSON to be received from an `omg subscribe`.
-Runs `omg subscribe` and compares the received output with the expected payload.
+Takes a single payload with the expected JSON to be received from an `oms subscribe`.
+Runs `oms subscribe` and compares the received output with the expected payload.
 The events to be subscribed and arguments are parsed from the filename.
 */
 
@@ -18,24 +18,30 @@ const payloads = JSON.parse(readFileSync(payloadFile));
 // get additional CLI arguments from the payload file name
 const actions = basename(payloadFile).split('.')[0].split('_');
 
-function testWithOMG(cb) {
-  const args = ['omg', 'subscribe', '--silent', 'listen', ...actions];
+const OMS_PATH = process.env.OMS_PATH || null
+
+function testWithOMS(cb) {
+  const args = ['subscribe', '--silent', 'listen', ...actions];
   console.log(`Spawn: ${args.join(' ')}`);
-  const omg = spawn('npx', args);
-  omg.stdout.pipe(process.stdout)
-  omg.stderr.pipe(process.stderr)
-  cb(omg);
+  if (OMS_PATH) {
+    oms = spawn(OMS_PATH, args)
+  } else {
+    oms = spawn('npx', ['oms'].concat(args))
+  }
+  oms.stdout.pipe(process.stdout)
+  oms.stderr.pipe(process.stderr)
+  cb(oms);
 }
 
-testWithOMG(function(omg){
-  omg.stdout.on('data', (data) => {
+testWithOMS(function(oms){
+  oms.stdout.on('data', (data) => {
     const payload = JSON.parse(data);
     delete payload['time'];
     delete payload['data']['time'];
     const expected = payloads.shift();
     assert.deepEqual(payload, expected);
     if (payloads.length === 0) {
-      omg.kill();
+      oms.kill();
       process.exit(0);
     }
   });
