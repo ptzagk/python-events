@@ -18,16 +18,10 @@ const payloads = JSON.parse(readFileSync(payloadFile));
 // get additional CLI arguments from the payload file name
 const actions = basename(payloadFile).split('.')[0].split('_');
 
-const OMS_PATH = process.env.OMS_PATH || null
-
 function testWithOMS(cb) {
   const args = ['subscribe', '--silent', 'listen', ...actions];
-  console.log(`Spawn: ${args.join(' ')}`);
-  if (OMS_PATH) {
-    oms = spawn(OMS_PATH, args)
-  } else {
-    oms = spawn('npx', ['oms'].concat(args))
-  }
+  console.log(`Spawn: oms ${args.join(' ')}`);
+  const oms = spawn('oms', args)
   oms.stdout.pipe(process.stdout)
   oms.stderr.pipe(process.stderr)
   cb(oms);
